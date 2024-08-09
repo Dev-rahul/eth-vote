@@ -5,6 +5,16 @@
 /.pnp
 .pnp.js
 
+/artifacts/
+/build/
+/cache/
+/keys/
+/typechain-types/
+/yarn.lock
+/package-lock.json
+/.parcel-cache/
+/dist/
+
 # testing
 /coverage
 
