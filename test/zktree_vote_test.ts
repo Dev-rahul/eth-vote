@@ -1,7 +1,7 @@
-import { ethers } from "hardhat";
-import { mimcSpongecontract } from 'circomlibjs'
-import { ZKTreeVote } from "../typechain-types";
-import { generateCommitment, calculateMerkleRootAndZKProof } from 'zk-merkle-tree';
+var ethers = require('hardhat').ethers;
+var mimcSpongecontract = require('circomlibjs').mimcSpongecontract;
+var  ZKTreeVote = require("../typechain-types");
+var { generateCommitment, calculateMerkleRootAndZKProof } = require('zk-merkle-tree');
 
 const SEED = "mimcsponge";
 

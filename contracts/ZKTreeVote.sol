@@ -25,7 +25,12 @@ contract ZKTreeVote is ZKTree {
         require(msg.sender == owner, "Only owner can add validator!");
         validators[_validator] = true;
     }
+    
+    function isValidator(address _address) external view returns (bool) {
+        return validators[_address]; // Returns true if the address is a validator, false otherwise
+    }
 
+    
     function registerCommitment(
         uint256 _uniqueHash,
         uint256 _commitment

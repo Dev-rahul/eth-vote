@@ -12,7 +12,10 @@ function Home() {
               <button className="px-4 py-2 bg-green-500 hover:bg-green-700 rounded">Vote</button>
             </Link>
             <Link to="/results">
-              <button className="px-4 py-2 bg-red-500 hover:bg-red-700 rounded">Button 3</button>
+              <button className="px-4 py-2 bg-red-500 hover:bg-red-700 rounded">Result</button>
+            </Link>
+            <Link to="/validator">
+              <button className="px-4 py-2 bg-red-500 hover:bg-red-700 rounded">Validator Tool</button>
             </Link>
           </div>
     </div>
