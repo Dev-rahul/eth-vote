@@ -6,6 +6,7 @@ import Vote from './components/Vote';
 import Layout from './components/Layout';
 import Validator from './components/Validator';
 import Results from './components/Results';
+import Control from './components/Control';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/vote" element={<Layout><Vote /></Layout>} />
         <Route path="/results" element={<Layout><Results /></Layout>} />
         <Route path="/validator" element={<Layout><Validator /></Layout>} />
+        <Route path="/control" element={<Layout><Control /></Layout>} />
 
       </Routes>
     </Router>
