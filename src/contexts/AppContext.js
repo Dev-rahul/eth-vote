@@ -1,5 +1,5 @@
 // src/AppContext.js
-import React, { createContext, useState, useMemo } from 'react';
+import React, { createContext, useState, useMemo, useEffect } from 'react';
 import { ethers } from 'ethers';
 
 const AppContext = createContext();
@@ -15,6 +15,32 @@ export const AppProvider = ({ children }) => {
     return `${validatorAddress.slice(0, 6)}...${validatorAddress.slice(-4)}`;
   }, [validatorAddress]);
 
+
+  useEffect(() => {
+    checkIfMetaMaskConnected();
+  }, []);
+
+  // Check if MetaMask is connected
+  const checkIfMetaMaskConnected = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+        if (accounts.length > 0) {
+          handleAccountChange(accounts); // Handles account logic
+        } else {
+          console.log("MetaMask is not connected.");
+        }
+      } catch (error) {
+        console.log("Error checking MetaMask connection:", error);
+      }
+    } else {
+      console.log("MetaMask not detected.");
+    }
+  };
+
+
   const handleClick = async () => {
     console.log("Requesting account...");
 
@@ -25,19 +51,8 @@ export const AppProvider = ({ children }) => {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
-        setIsConnected(true);
-        for (let i = 0; i < accounts.length; i++) {
-          const address = accounts[i];
-          const isValidatorStatus = await isValidator(address);
-
-          if (isValidatorStatus) {
-            setValidatorAddress(address);
-            console.log(`Address ${address} is a validator.`);
-            break;
-          } else {
-            console.log(`Address ${address} is not a validator.`);
-          }
-        }
+        handleAccountChange(accounts);
+ 
       } catch (error) {
         console.log("Error connecting...");
       }
@@ -45,6 +60,36 @@ export const AppProvider = ({ children }) => {
       alert("Meta Mask not detected");
     }
   };
+
+  const handleAccountChange = async (accounts) => {
+    setIsConnected(true);
+    for (let i = 0; i < accounts.length; i++) {
+      const address = accounts[i];
+      const isValidatorStatus = await isValidator(address);
+
+      if (isValidatorStatus) {
+        setValidatorAddress(address);
+        console.log(`Address ${address} is a validator.`);
+        break;
+      } else {
+        console.log(`Address ${address} is not a validator.`);
+      }
+    }
+  }
+
+  window.onload = (event) => {
+    checkConnection();
+ };
+  const checkConnection = async () => {
+    try {
+      const accounts = await window.ethereum.on("accountsChanged");
+      console.log("onLoad ", accounts)
+      handleAccountChange(accounts);
+
+    } catch (error) {
+      console.log("Error connecting...");
+    }
+  }
 
   const isValidator = async (address) => {
     const contracts = await (await fetch("contracts.json")).json();

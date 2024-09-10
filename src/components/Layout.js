@@ -9,10 +9,11 @@ function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <div className="flex items-center justify-between px-4 py-4 bg-gray-800">
+      <div className="flex items-center justify-between px-4 py-1 bg-gray-800">
         <div className="flex-1"></div>
         <Link to="/">
-          <h1 className="text-4xl font-bold text-center">etherVote</h1>
+        <img height={80} width={80} src='etherVote_1.png'></img>
+          {/* <h1 className="text-4xl font-bold text-center">etherVote</h1> */}
         </Link>
         <div className="flex-1 flex justify-end">
           {isConnected ? (
