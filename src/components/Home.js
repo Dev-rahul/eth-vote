@@ -6,6 +6,7 @@ import {
   ChartBarIcon,
   FingerPrintIcon,
   WrenchIcon,
+  ArrowDownOnSquareIcon,
 } from "@heroicons/react/24/outline"; // Import necessary icons
 import AppContext from "../contexts/AppContext";
 
@@ -41,6 +42,13 @@ function Home() {
             <button className="flex items-center space-x-2 w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium shadow-md transition-transform transform hover:scale-105">
               <UserIcon className="w-5 h-5" />
               <span>Register</span>
+            </button>
+          </Link>
+
+          <Link to="/import">
+            <button className="flex items-center space-x-2 w-full px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded font-medium shadow-md transition-transform transform hover:scale-105">
+              <ArrowDownOnSquareIcon className="w-5 h-5" />
+              <span>Import Registartion</span>
             </button>
           </Link>
 
