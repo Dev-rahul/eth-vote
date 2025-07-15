@@ -1,70 +1,185 @@
-# Getting Started with Create React App
+# EthVote - Zero-Knowledge Voting System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A decentralized voting application built on Ethereum that uses zero-knowledge proofs to ensure voter privacy and prevent double voting. The system utilizes Merkle trees and zk-SNARKs to maintain anonymity while ensuring the integrity of the voting process.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **Anonymous Voting**: Uses zero-knowledge proofs to maintain voter privacy
+- **Double Voting Prevention**: Merkle tree-based nullifier system prevents users from voting twice
+- **Validator System**: Controlled by validators who can register voters and manage polls
+- **Real-time Results**: Live vote counting and results display
+- **MetaMask Integration**: Seamless wallet connectivity
+- **Modern UI**: Clean, responsive interface built with React and Tailwind CSS
 
-### `npm start`
+## 🛠️ Technology Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**: React.js with Tailwind CSS
+- **Backend**: Smart contracts on Ethereum
+- **Zero-Knowledge**: Circom circuits with zk-SNARKs (Groth16)
+- **Wallet**: MetaMask integration via ethers.js
+- **Development**: Hardhat for smart contract development and testing
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📁 Project Structure
 
-### `npm test`
+```
+├── contracts/                 # Solidity smart contracts
+│   ├── ZKTreeVote.sol        # Main voting contract
+│   └── Verifier.sol          # ZK proof verifier
+├── src/
+│   ├── components/           # React components
+│   │   ├── Home.js          # Main dashboard
+│   │   ├── Register.js      # Voter registration
+│   │   ├── Vote.js          # Voting interface
+│   │   ├── Results.js       # Vote results
+│   │   ├── Validator.js     # Validator tools
+│   │   └── Control.js       # Poll control panel
+│   └── contexts/
+│       └── AppContext.js    # React context for state management
+├── scripts/
+│   ├── deploy.ts            # Contract deployment
+│   └── prepare.sh           # ZK circuit preparation
+└── keys/                    # ZK proving keys
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🔧 Prerequisites
 
-### `npm run build`
+- Node.js (v14 or higher)
+- MetaMask browser extension
+- Hardhat
+- snarkjs
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Clone the Repository
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+git clone <repository-url>
+cd eth-vote
+```
 
-### `npm run eject`
+### 2. Install Dependencies
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 3. Prepare ZK Circuits
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm run prepare
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+This will:
+- Set up the zk-SNARK proving keys
+- Generate the Solidity verifier contract
+- Copy necessary files to the correct locations
 
-## Learn More
+### 4. Start Local Blockchain
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npx hardhat node
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 5. Deploy Contracts
 
-### Code Splitting
+```bash
+npm run deploy
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 6. Start the Application
 
-### Analyzing the Bundle Size
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The application will be available at `http://localhost:3000`
 
-### Making a Progressive Web App
+## 📱 How to Use
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### For Voters:
 
-### Advanced Configuration
+1. **Connect Wallet**: Connect your MetaMask wallet
+2. **Register**: Generate a commitment and get it registered by a validator
+3. **Vote**: Cast your vote anonymously using zero-knowledge proofs
+4. **View Results**: Check real-time voting results
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### For Validators:
 
-### Deployment
+1. **Register Voters**: Add voter commitments to the Merkle tree
+2. **Control Polls**: Start and stop voting periods
+3. **Manage System**: Oversee the voting process
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🔒 Privacy & Security
 
-### `npm run build` fails to minify
+- **Zero-Knowledge Proofs**: Voters can prove their eligibility without revealing their identity
+- **Merkle Tree**: Efficient storage and verification of voter commitments
+- **Nullifiers**: Prevent double voting while maintaining anonymity
+- **On-chain Verification**: All proofs are verified on the blockchain
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 📊 Voting Process
+
+1. **Commitment Generation**: Voters generate a secret commitment
+2. **Registration**: Validators register the commitment in the Merkle tree
+3. **Proof Generation**: When voting, a zero-knowledge proof is generated
+4. **Verification**: The smart contract verifies the proof and records the vote
+5. **Nullifier**: A nullifier prevents the same commitment from voting twice
+
+## 🔧 Smart Contract Functions
+
+### ZKTreeVote.sol
+
+- `registerValidator(address)`: Add a new validator
+- `isValidator(address)`: Check if address is a validator
+- `startVoting()`: Begin voting period
+- `stopVoting()`: End voting period
+- `registerCommitment(uint256, uint256)`: Register voter commitment
+- `vote(uint, uint256, uint256, uint[2], uint[2][2], uint[2])`: Cast vote with ZK proof
+- `getOptionCounter(uint)`: Get vote count for option
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+## 🚀 Deployment
+
+### Production Build
+
+```bash
+npm run build
+```
+
+### Deploy to Testnet
+
+1. Update `hardhat.config.ts` with testnet configuration
+2. Run deployment script with network flag:
+
+```bash
+npx hardhat run scripts/deploy.ts --network <network-name>
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🔗 Resources
+
+- [Circom Documentation](https://docs.circom.io/)
+- [snarkjs](https://github.com/iden3/snarkjs)
+- [Hardhat](https://hardhat.org/)
+- [zk-merkle-tree](https://github.com/privacy-scaling-explorations/zk-merkle-tree)
+
+## ⚠️ Disclaimer
+
+This is a demonstration project. Before using in production, ensure proper security audits and testing are conducted.
